@@ -22,15 +22,10 @@ fn main() {
     if args.verbose {
         println!("DEBUG {args:?}");
     }
-    //
-    // println!(
-    //     "Hello {} (from recursive-tarballs)!",
-    //     args.name.unwrap_or("world".to_string())
-    // );
 
     // print current directory
     let current_dir = Path::new("."); // "/home/gig/local_repos/recursive-tarballs/testing/test-folder"; // std::env::current_dir().unwrap();
-    println!("Current directory: {:?}", current_dir);
+    // println!("Current directory: {:?}", current_dir);
 
     // // list files in current directory
     // let paths = std::fs::read_dir(current_dir).unwrap();
@@ -86,14 +81,5 @@ fn main() {
             // delete archived folder at folder_path
             std::fs::remove_dir_all(folder_path).unwrap();
         };
-
-        // let mut header = Header::new_gnu();
-        // header.set_path(tarball_name).unwrap();
-        // header.set_size(4);
-        // header.set_cksum();
-
-        // let mut archive = Builder::new(Vec::new());
-        // archive.append_dir_all(folder_path, ".").unwrap();
-        // archive.finish().unwrap();
     }
 }
