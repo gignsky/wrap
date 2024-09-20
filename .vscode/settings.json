@@ -1,0 +1,19 @@
+{
+    "editor.formatOnSave": true,
+    "rust-analyzer.files.excludeDirs": [
+        ".direnv"
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".gitignore": true,
+        "**/.direnv": true
+    },
+    "explorerExclude.backup": {},
+    // https://twitter.com/sridca/status/1674947342607216641
+    // "editor.inlayHints.enabled": "offUnlessPressed",
+}
