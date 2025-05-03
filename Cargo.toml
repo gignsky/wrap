@@ -11,3 +11,8 @@ version = "0.0.1"
 [dependencies]
 clap = { version = "4.3.14", features = ["derive"] }
 tar = "0.4.41"
+
+# #tui stuff
+# color-eyre = "0.6.3"
+# crossterm = "0.28.1"
+# ratatui = "0.29.0"

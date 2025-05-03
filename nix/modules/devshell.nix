@@ -15,6 +15,7 @@
         bacon
         wslu
         lolcat
+        # cargo-generate
       ];
     };
   };
