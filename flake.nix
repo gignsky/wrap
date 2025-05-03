@@ -22,7 +22,7 @@
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       flake = false;
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs"; #non-existant input
     };
     
     # Dev tools
