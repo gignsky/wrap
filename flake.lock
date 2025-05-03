@@ -91,11 +91,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1746302879,
-        "narHash": "sha256-mi+9Y3TGi/daxH88F0tDV4IUGk01YAnstBdEAIvlAQY=",
+        "lastModified": 1746310153,
+        "narHash": "sha256-esa4ehZIHdiK7ok9s/7Qgt8a++FAEqwDpt6Aru0lkkY=",
         "owner": "gignsky",
         "repo": "dotfiles",
-        "rev": "f55b337caf9cbbfaa3d67691518e014a7fee1a62",
+        "rev": "f122697c1238a60c9b54a856d4e62356d06bfbd7",
         "type": "github"
       },
       "original": {
