@@ -25,6 +25,7 @@ fn main() {
 
     // print current directory
     let current_dir = Path::new("."); // "/home/gig/local_repos/recursive-tarballs/testing/test-folder"; // std::env::current_dir().unwrap();
+
     // println!("Current directory: {:?}", current_dir);
 
     // // list files in current directory
