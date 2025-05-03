@@ -19,12 +19,16 @@
       url = "github:srid/cargo-doc-live";
     };
 
-    git-hooks.url = "github:cachix/git-hooks.nix";
-    git-hooks.flake = false;
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     
     # Dev tools
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
