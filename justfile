@@ -49,6 +49,7 @@ cargo-update-no-commit:
 cargo-update:
 	cargo update
 	git add Cargo.lock
+    git commit -m "updated Cargo.lock dependecies via justfile (just cargo-update)"
 	
 build *ARGS:
     nix build {{ ARGS }}
