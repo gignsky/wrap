@@ -3,3 +3,4 @@
 /result-lib
 .direnv
 /test
+.pre-commit-config.yaml
