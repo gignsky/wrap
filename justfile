@@ -32,6 +32,7 @@ health:
 clean:
 	rm -rfv result
 	cargo clean
+	quick-results
 
 update:
 	just dont-fuck-my-build
