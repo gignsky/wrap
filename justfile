@@ -42,7 +42,13 @@ update-no-commit:
 	just dont-fuck-my-build
 	cargo-update --no-commit
 	nix flake update
-	
+
+update-flake:
+	nix flake update --commit-lock-file
+
+update-flake-no-commit:
+	nix flake update
+
 build *ARGS:
 	nix build {{ ARGS }}
 	quick-results
