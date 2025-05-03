@@ -16,7 +16,7 @@ watch *ARGS:
 
 show:
     just dont-fuck-my-build
-    om show .
+    just om show .
 
 dont-fuck-my-build:
     git ls-files --others --exclude-standard -- '*.nix' | xargs -r git add -v | lolcat
@@ -50,8 +50,8 @@ cargo-update:
 	cargo update
 	git add Cargo.lock
 	
-build:
-    nix build
+build *ARGS:
+    nix build {{ ARGS }}
     quick-results
 
 check *ARGS:
