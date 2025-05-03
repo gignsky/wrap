@@ -30,7 +30,7 @@ health:
     just om health .
 
 clean:
-    rm -rfv results
+    rm -rfv result
     cargo clean
 
 update:
