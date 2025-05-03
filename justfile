@@ -35,21 +35,13 @@ clean:
 
 update:
 	just dont-fuck-my-build
-	just cargo-update
+	cargo-update
 	nix flake update --commit-lock-file
 
 update-no-commit:
 	just dont-fuck-my-build
-	just cargo-update-no-commit
+	cargo-update --no-commit
 	nix flake update
-
-cargo-update-no-commit:
-	cargo update
-
-cargo-update:
-	cargo update
-	git add Cargo.lock
-	git commit -m "updated Cargo.lock dependecies via justfile (just cargo-update)"
 	
 build *ARGS:
 	nix build {{ ARGS }}
