@@ -29,10 +29,6 @@ pre-commit-all:
 om *ARGS:
     nix run github:juspay/omnix -- {{ ARGS }}
 
-show:
-    just dont-fuck-my-build
-    just om show .
-
 health:
     just dont-fuck-my-build
     just om health .
