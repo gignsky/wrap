@@ -21,3 +21,7 @@ show:
 dont-fuck-my-build:
     git ls-files --others --exclude-standard -- '*.nix' | xargs -r git add -v | lolcat
     echo "No chance your build is fucked! 👍" | lolcat
+
+check:
+    just dont-fuck-my-build
+    nix flake check
