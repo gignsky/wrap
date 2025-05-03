@@ -30,6 +30,13 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # personal repos
+    dotfiles = {
+      url = "github:gignsky/dotfiles";
+      flake = true;
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
