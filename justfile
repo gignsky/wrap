@@ -39,7 +39,12 @@ clean:
 
 update:
 	just dont-fuck-my-build
+    just cargo-update
 	nix flake update --commit-lock-file
+
+cargo-update:
+    cargo update
+    git add Cargo.lock
 
 build:
     nix build
