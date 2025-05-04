@@ -193,7 +193,7 @@ dependencies = [
 
 [[package]]
 name = "recursive-tarballs"
-version = "0.0.3-alpha-test1"
+version = "0.0.3-alpha-test2"
 dependencies = [
  "clap",
  "tar",
