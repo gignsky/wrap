@@ -1,11 +1,11 @@
-name: Release on Cargo.toml Change
+name: Release
 
 on:
   push:
     branches:
       - main
-    paths:
-      - Cargo.toml
+    # paths:
+    #   - Cargo.toml
 
 jobs:
   build:
@@ -24,6 +24,13 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
+
+      - name: Install zig
+        run: |
+          wget https://ziglang.org/builds/zig-linux-x86_64-0.12.0-dev.2468+8f19f828c.tar.xz
+          tar -xf zig-linux-x86_64-0.12.0-dev.2468+8f19f828c.tar.xz
+          sudo mv zig-linux-x86_64-0.12.0-dev.2468+8f19f828c /opt/zig
+          echo "::add-path::/opt/zig"
 
       - name: Install cargo-zigbuild
         run: cargo install cargo-zigbuild
