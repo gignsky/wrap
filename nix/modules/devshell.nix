@@ -9,14 +9,14 @@
         config.pre-commit.devShell # See ./nix/modules/pre-commit.nix
       ];
       packages = with pkgs; [
+        just
         nixd # Nix language server
-        cargo-watch
+        bacon
         config.process-compose.cargo-doc-live.outputs.package
         nil
-        bacon
-        wslu
         lolcat
-        # cargo-generate
+        wslu
+        cargo-generate
 
         # dotfiles programs
         inputs.dotfiles.packages.${system}.quick-results
