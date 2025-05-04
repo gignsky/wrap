@@ -35,8 +35,9 @@ jobs:
         run: |
           ext=""
           if [[ "${{ matrix.target }}" == *windows* ]]; then ext=".exe"; fi
+          safe_target=$(echo "${{ matrix.target }}" | sed 's/-/_/g')
           mkdir -p dist
-          cp target/${{ matrix.target }}/release/recursive-tarballs$ext dist/recursive-tarballs-${{ matrix.target }}$ext
+          cp target/${{ matrix.target }}/release/recursive-tarballs$ext dist/recursive-tarballs-${safe_target}$ext
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
