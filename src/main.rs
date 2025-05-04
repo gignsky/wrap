@@ -126,7 +126,7 @@ fn tarballer(
                         println!("Dry run - would remove folder: {:?}", folder_path);
                     }
                     false => {
-                        println!("Dry run - would not remove folder: {:?}", folder_path);
+                        println!("Dry run - would NOT remove folder: {:?}", folder_path);
                     }
                 }
             }
