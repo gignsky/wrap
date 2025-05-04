@@ -1,4 +1,5 @@
 { inputs, ... }:
+# Most recent update to fork-upstream tried to remove this file but I think it's still in use 4/11/25
 {
   imports = [
     inputs.treefmt-nix.flakeModule

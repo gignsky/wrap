@@ -23,6 +23,9 @@
         inputs.dotfiles.packages.${system}.upjust
         inputs.dotfiles.packages.${system}.cargo-update
       ];
+      shellHook = ''
+        echo "welcome to the rust development environment" | ${pkgs.cowsay}/bin/cowsay
+      '';
     };
   };
 }
