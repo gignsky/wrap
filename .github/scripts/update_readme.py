@@ -1,20 +1,35 @@
 import sys
 
-def update_readme(help_file, readme_file, line_number):
+def update_readme(help_file, readme_file, heading):
     with open(help_file, 'r') as help_f:
         help_output = help_f.read()
 
     with open(readme_file, 'r') as readme_f:
         lines = readme_f.readlines()
 
-    # Insert the help output at the specified line
-    lines.insert(line_number - 1, "```\n" + help_output + "```\n")
+    # Find the heading and the start of the code block
+    start_index = None
+    end_index = None
+    for i, line in enumerate(lines):
+        if heading in line:
+            start_index = i
+        elif start_index is not None and line.strip() == "```":
+            if end_index is None:
+                end_index = i + 1  # End of the code block
+            else:
+                break
+
+    if start_index is None or end_index is None:
+        raise ValueError(f"Could not find the heading '{heading}' or its code block in the README.")
+
+    # Replace the code block content
+    new_lines = lines[:start_index + 1] + ["```\n"] + [help_output] + ["```\n"] + lines[end_index:]
 
     with open(readme_file, 'w') as readme_f:
-        readme_f.writelines(lines)
+        readme_f.writelines(new_lines)
 
 if __name__ == "__main__":
     help_file = sys.argv[1]
     readme_file = sys.argv[2]
-    line_number = int(sys.argv[3])
-    update_readme(help_file, readme_file, line_number)
+    heading = sys.argv[3]
+    update_readme(help_file, readme_file, heading)
