@@ -1,0 +1,36 @@
+name: Update README with --help Output
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build the binary
+        run: cargo build --release
+
+      - name: Capture --help output
+        run: ./target/release/recursive-tarballs --help > help_output.txt
+
+      - name: Update README.md
+        run: |
+          python3 .github/scripts/update_readme.py help_output.txt README.md 54
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update README with --help output"
+          git push
