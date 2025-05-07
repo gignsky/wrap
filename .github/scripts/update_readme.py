@@ -10,13 +10,14 @@ def update_readme(help_file, readme_file, heading):
     # Find the heading and the start of the code block
     start_index = None
     end_index = None
+    code_block_count = 0
     for i, line in enumerate(lines):
         if heading in line:
             start_index = i
         elif start_index is not None and line.strip() == "```":
-            if end_index is None:
-                end_index = i + 1  # End of the code block
-            else:
+            code_block_count += 1
+            if code_block_count == 2:  # Second instance of "```"
+                end_index = i + 1
                 break
 
     if start_index is None or end_index is None:
