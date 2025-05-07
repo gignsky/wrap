@@ -47,7 +47,7 @@ fn pathfinder(
 ) -> std::collections::HashMap<String, std::path::PathBuf> {
     // find current directory
     if verbose {
-        println!("Current directory: {:?}", current_dir);
+        println!("Working directory: {:?}", current_dir);
     }
 
     // start vec of folder paths
