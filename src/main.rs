@@ -18,6 +18,10 @@ struct Args {
     /// Dry run - List folders to be tarballed but do not create tarballs
     #[arg(short = 'd', long = "dry-run")]
     dry_run: bool,
+
+    /// Test Argument
+    #[arg(short = 't', long = "test")]
+    test: bool,
 }
 
 fn main() {
