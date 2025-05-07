@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - gignsky/issue4
   workflow_dispatch:
 
 jobs:
