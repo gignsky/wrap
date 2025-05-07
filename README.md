@@ -60,6 +60,7 @@ Options:
   -v             Print Verbose output
   -r, --remove   Remove folders after tarballing
   -d, --dry-run  Dry run - List folders to be tarballed but do not create tarballs
+  -t, --test     Test Argument
   -h, --help     Print help
   -V, --version  Print version
 ```
