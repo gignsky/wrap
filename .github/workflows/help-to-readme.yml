@@ -1,11 +1,11 @@
 name: Update README with --help Output
 
 on:
-  push:
-    branches:
-      - develop
-      - gignsky/issue4
-  workflow_dispatch:
+    pull_request:
+        branches:
+            - develop
+            - main
+    workflow_dispatch:
 
 jobs:
   update-readme:
