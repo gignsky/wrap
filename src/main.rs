@@ -179,6 +179,14 @@ fn remove_dir(path: &str, verbose: bool) {
                     let mut input = String::new();
                     std::io::stdin().read_line(&mut input).unwrap();
                 }
+                std::io::ErrorKind::PermissionDenied => {
+                    println!("Permission denied: {:?}", path);
+                    println!(
+                        "Please check your permissions (you may have a file open inside the directory) and press Enter to retry."
+                    );
+                    let mut input = String::new();
+                    std::io::stdin().read_line(&mut input).unwrap();
+                }
                 _ => {
                     if verbose {
                         println!("Error removing folder: {:?}", e);
