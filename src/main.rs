@@ -158,6 +158,9 @@ fn tarballer(
 
 fn remove_dir(path: &str, verbose: bool) {
     loop {
+        if verbose {
+            println!("Attempting to remove folder: {:?}", path);
+        }
         let remover = std::fs::remove_dir_all(&path);
         match remover {
             Ok(_) => {
