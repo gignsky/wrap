@@ -37,6 +37,8 @@
     "evenBetterToml.formatter.trailingNewline": true,
     "evenBetterToml.schema.links": true,
     "cSpell.words": [
+        "tarballed",
+        "tarballing",
         "dtolnay",
         "gignsky",
         "juspay",
