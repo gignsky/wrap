@@ -143,7 +143,7 @@ fn tarballer(
                         if verbose {
                             println!("Removing folder: {:?}", folder_path);
                         }
-                        std::fs::remove_dir_all(folder_path).unwrap();
+                        remove_dir(folder_path, verbose);
                     }
                     false => {
                         if verbose {
@@ -152,6 +152,40 @@ fn tarballer(
                     }
                 }
             }
+        }
+    }
+}
+
+fn remove_dir(path: &str, verbose: bool) {
+    loop {
+        let remover = std::fs::remove_dir_all(&path);
+        match remover {
+            Ok(_) => {
+                if verbose {
+                    println!("Removed folder: {:?}", path);
+                }
+                break;
+            }
+            Err(e) => match e.kind() {
+                std::io::ErrorKind::NotFound => {
+                    if verbose {
+                        println!("Folder not found: {:?}", path);
+                    }
+                    break;
+                }
+                std::io::ErrorKind::ResourceBusy => {
+                    println!("Folder is busy: {:?}", path);
+                    println!("Please close any open files in the folder and press Enter to retry.");
+                    let mut input = String::new();
+                    std::io::stdin().read_line(&mut input).unwrap();
+                }
+                _ => {
+                    if verbose {
+                        println!("Error removing folder: {:?}", e);
+                    }
+                    break;
+                }
+            },
         }
     }
 }
