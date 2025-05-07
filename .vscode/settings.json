@@ -37,6 +37,7 @@
     "evenBetterToml.formatter.trailingNewline": true,
     "evenBetterToml.schema.links": true,
     "cSpell.words": [
+        "dtolnay",
         "gignsky",
         "juspay",
         "justfile",
