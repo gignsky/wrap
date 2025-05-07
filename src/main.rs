@@ -18,23 +18,45 @@ struct Args {
     /// Dry run - List folders to be tarballed but do not create tarballs
     #[arg(short = 'd', long = "dry-run")]
     dry_run: bool,
+
+    /// Target folder - Tarball folders in this directory - Default is current directory
+    #[arg()]
+    target_dir: Option<String>,
 }
 
 fn main() {
     let args = Args::parse();
 
-    let current_dir = find_current_dir();
+    let target_dir = target_dir_finder(args.target_dir);
 
-    let tarball_names_and_paths = pathfinder(args.verbose, current_dir);
+    let tarball_names_and_paths = pathfinder(args.verbose, target_dir);
 
     tarballer(
         args.dry_run,
         args.verbose,
         args.remove,
         tarball_names_and_paths,
-        current_dir,
+        target_dir,
     );
 }
+
+fn target_dir_finder(target_dir: Option<String>) -> &Path {
+    match target_dir {
+        Some(dir) => {
+            let path = Path::new(&dir);
+            if path.exists() {
+                path
+            } else {
+                panic!("Target directory does not exist: {:?}", dir);
+            }
+        }
+        None => {
+            // If no target directory is provided, use the current directory
+            find_current_dir()
+        }
+    }
+}
+
 fn find_current_dir() -> &'static Path {
     let current_dir = Path::new(".");
     current_dir
