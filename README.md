@@ -1,3 +1,8 @@
+[![CI Nix](https://github.com/gignsky/recursive-tarballs/actions/workflows/ci-nix.yml/badge.svg)](https://github.com/gignsky/recursive-tarballs/actions/workflows/ci-nix.yml)
+[![Docs](https://github.com/gignsky/recursive-tarballs/actions/workflows/docs.yml/badge.svg)](https://github.com/gignsky/recursive-tarballs/actions/workflows/docs.yml)
+[![Release](https://github.com/gignsky/recursive-tarballs/actions/workflows/release.yml/badge.svg)](https://github.com/gignsky/recursive-tarballs/actions/workflows/release.yml)
+[![Update README with --help Output](https://github.com/gignsky/recursive-tarballs/actions/workflows/help-to-readme.yml/badge.svg)](https://github.com/gignsky/recursive-tarballs/actions/workflows/help-to-readme.yml)
+
 A command line utility written entirely in rust that creates tarballs from folders in the current working directory and optionally remove the folders that created those tarballs
 
 # Installation & Usage
