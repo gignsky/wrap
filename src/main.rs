@@ -132,6 +132,9 @@ fn tarballer(
             }
 
             false => {
+                if verbose {
+                    println!("Tarballing folder: {:?}", folder_path);
+                }
                 let file = File::create(tarball_path).unwrap();
                 let mut archive = Builder::new(file);
                 archive.append_dir_all(folder_path, folder_path).unwrap();
