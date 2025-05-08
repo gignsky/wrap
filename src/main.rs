@@ -18,26 +18,43 @@ struct Args {
     /// Dry run - List folders to be tarballed but do not create tarballs
     #[arg(short = 'd', long = "dry-run")]
     dry_run: bool,
+
+    /// Target folder - Tarball folders in this directory - Default is current directory
+    #[arg()]
+    target_dir: Option<String>,
 }
 
 fn main() {
     let args = Args::parse();
 
-    let current_dir = find_current_dir();
+    let target_dir = target_dir_finder(args.target_dir);
 
-    let tarball_names_and_paths = pathfinder(args.verbose, current_dir);
+    let tarball_names_and_paths = pathfinder(args.verbose, target_dir);
 
     tarballer(
         args.dry_run,
         args.verbose,
         args.remove,
         tarball_names_and_paths,
-        current_dir,
+        target_dir,
     );
 }
-fn find_current_dir() -> &'static Path {
-    let current_dir = Path::new(".");
-    current_dir
+
+fn target_dir_finder(target_dir: Option<String>) -> &'static Path {
+    match target_dir {
+        Some(dir) => {
+            let path = Path::new(&dir);
+            if path.exists() {
+                Box::leak(Box::new(path.to_path_buf())).as_path()
+            } else {
+                panic!("Target directory does not exist: {:?}", dir);
+            }
+        }
+        None => {
+            // If no target directory is provided, use the current directory
+            Path::new(".")
+        }
+    }
 }
 
 /// Finds all folders in the current directory and returns a hashmap of tarball names and paths
@@ -47,7 +64,7 @@ fn pathfinder(
 ) -> std::collections::HashMap<String, std::path::PathBuf> {
     // find current directory
     if verbose {
-        println!("Current directory: {:?}", current_dir);
+        println!("Working directory: {:?}", current_dir);
     }
 
     // start vec of folder paths
