@@ -1,6 +1,6 @@
 on: [push]
 
-name: CI
+name: Cargo Check
 
 jobs:
   check:

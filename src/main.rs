@@ -132,6 +132,9 @@ fn tarballer(
             }
 
             false => {
+                if verbose {
+                    println!("Tarballing folder: {:?}", folder_path);
+                }
                 let file = File::create(tarball_path).unwrap();
                 let mut archive = Builder::new(file);
                 archive.append_dir_all(folder_path, folder_path).unwrap();
@@ -143,7 +146,7 @@ fn tarballer(
                         if verbose {
                             println!("Removing folder: {:?}", folder_path);
                         }
-                        std::fs::remove_dir_all(folder_path).unwrap();
+                        remove_dir(folder_path, verbose);
                     }
                     false => {
                         if verbose {
@@ -152,6 +155,51 @@ fn tarballer(
                     }
                 }
             }
+        }
+    }
+}
+
+fn remove_dir(path: &str, verbose: bool) {
+    loop {
+        if verbose {
+            println!("Attempting to remove folder: {:?}", path);
+        }
+        let remover = std::fs::remove_dir_all(path);
+        match remover {
+            Ok(_) => {
+                if verbose {
+                    println!("Removed folder: {:?}", path);
+                }
+                break;
+            }
+            Err(e) => match e.kind() {
+                std::io::ErrorKind::NotFound => {
+                    if verbose {
+                        println!("Folder not found: {:?}", path);
+                    }
+                    break;
+                }
+                std::io::ErrorKind::ResourceBusy => {
+                    println!("Folder is busy: {:?}", path);
+                    println!("Please close any open files in the folder and press Enter to retry.");
+                    let mut input = String::new();
+                    std::io::stdin().read_line(&mut input).unwrap();
+                }
+                std::io::ErrorKind::PermissionDenied => {
+                    println!("Permission denied: {:?}", path);
+                    println!(
+                        "Please check your permissions (you may have a file open inside the directory) and press Enter to retry."
+                    );
+                    let mut input = String::new();
+                    std::io::stdin().read_line(&mut input).unwrap();
+                }
+                _ => {
+                    if verbose {
+                        println!("Error removing folder: {:?}", e);
+                    }
+                    break;
+                }
+            },
         }
     }
 }

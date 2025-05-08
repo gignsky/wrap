@@ -35,5 +35,18 @@
     "evenBetterToml.formatter.indentEntries": true,
     "evenBetterToml.formatter.indentTables": true,
     "evenBetterToml.formatter.trailingNewline": true,
-    "evenBetterToml.schema.links": true
+    "evenBetterToml.schema.links": true,
+    "cSpell.words": [
+        "tarballed",
+        "tarballing",
+        "dtolnay",
+        "gignsky",
+        "juspay",
+        "justfile",
+        "Makefile'esque",
+        "nixos",
+        "nixpkgs",
+        "omnix",
+        "tarballer"
+    ]
 }

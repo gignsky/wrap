@@ -17,6 +17,7 @@
         lolcat
         wslu
         cargo-generate
+        python3
 
         # dotfiles programs
         inputs.dotfiles.packages.${system}.quick-results

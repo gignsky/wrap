@@ -3,8 +3,8 @@ authors = ["Maxwell Rupp <gignsky@gignsky.com>"]
 edition = "2021"
 # If you change the name here, you must also do it in flake.nix (and run `cargo generate-lockfile` afterwards)
 name = "recursive-tarballs"
-description = "A simple Rust project using Nix"
-version = "0.1.0"
+description = "A command line utility written entirely in Rust that creates tarballs from folders in the current working directory and optionally removes the folders that created those tarballs"
+version = "0.1.1"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
