@@ -1,0 +1,38 @@
+name: Check Cargo Version
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    check-cargo-version:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Set up Git
+              run: |
+                git fetch --tags
+
+            - name: Get latest tag
+              id: get_latest_tag
+              run: echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+
+            - name: Get Cargo.toml version
+              id: get_cargo_version
+              run: |
+                CARGO_VERSION=$(grep '^version' Cargo.toml | sed 's/version = "\(.*\)"/\1/')
+                echo "CARGO_VERSION=$CARGO_VERSION" >> $GITHUB_ENV
+
+            - name: Compare versions
+              id: compare_versions
+              run: |
+                if [ "$CARGO_VERSION" = "$LATEST_TAG" ]; then
+                echo "Error: Cargo.toml version ($CARGO_VERSION) has not been updated since the last tag ($LATEST_TAG)."
+                exit 1
+                else
+                echo "Cargo.toml version ($CARGO_VERSION) has been updated since the last tag ($LATEST_TAG)."
+                fi
