@@ -20,7 +20,7 @@ jobs:
             - name: Get latest tag from main branch
               id: get_latest_tag
               run: |
-                LATEST_TAG=$(git fetch origin main --tags && git tag --sort=-creatordate | head -n 1)
+                LATEST_TAG=$(git fetch origin main --tags && git tag --sort=-creatordate | head -n 1 | sed 's/^v//')
                 echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
             - name: Get Cargo.toml version
