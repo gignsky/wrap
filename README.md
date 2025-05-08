@@ -17,7 +17,9 @@ A command line utility written entirely in rust that creates tarballs from folde
 In your `flake.nix` file: 
 1. add `inputs.tarballer.url = "github:gignsky/tarballer";` to your inputs
 2. inside of your `environment.systemPackages` often defined under: `outputs.nixosConfigurations.{hostname}.nixpkgs.lib.nixosSystem.modules`
-3. add `inputs.tarballer.packages.${system}.tarballer`
+3. add either:
+   1. `inputs.tarballer.packages.${system}.tarballer`
+   2. `inputs.tarballer.packages.${system}.default`
 
 ### Download the binary
 1. Navigate to https://github.com/gignsky/tarballer/releases
