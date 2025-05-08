@@ -7,13 +7,13 @@
     inputs.cargo-doc-live.flakeModule
   ];
   perSystem = { config, self', pkgs, lib, ... }: {
-    rust-project.crates."recursive-tarballs".crane.args = {
+    rust-project.crates."tarballer".crane.args = {
       buildInputs = lib.optionals pkgs.stdenv.isDarwin (
         with pkgs.darwin.apple_sdk.frameworks; [
           IOKit
         ]
       );
     };
-    packages.default = self'.packages.recursive-tarballs;
+    packages.default = self'.packages.tarballer;
   };
 }
