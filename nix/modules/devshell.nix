@@ -25,7 +25,7 @@
         inputs.dotfiles.packages.${system}.cargo-update
       ];
       shellHook = ''
-        echo "welcome to the rust development environment" | ${pkgs.cowsay}/bin/cowsay
+        echo "welcome to the rust development environment for the tarballer package" | ${pkgs.cowsay}/bin/cowsay
       '';
     };
   };
