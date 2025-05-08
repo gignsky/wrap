@@ -36,17 +36,12 @@
     "evenBetterToml.formatter.indentTables": true,
     "evenBetterToml.formatter.trailingNewline": true,
     "evenBetterToml.schema.links": true,
-    "cSpell.words": [
-        "tarballed",
-        "tarballing",
-        "dtolnay",
-        "gignsky",
-        "juspay",
-        "justfile",
-        "Makefile'esque",
-        "nixos",
-        "nixpkgs",
-        "omnix",
-        "tarballer"
-    ]
+    "cSpell.customDictionaries": {
+        "custom-dictionary-workspace": {
+            "name": "custom-dictionary-workspace",
+            "path": "${workspaceFolder:tarballer}/.cspell/custom-dictionary-workspace.txt",
+            "addWords": true,
+            "scope": "workspace"
+        }
+    }
 }
