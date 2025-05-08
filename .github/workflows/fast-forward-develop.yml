@@ -24,5 +24,5 @@ jobs:
           - name: Fast-forward develop branch
             run: |
               git checkout develop
-              git merge --ff-only origin/main
+              git merge --ff-only origin/main || git merge --allow-unrelated-histories origin/main
               git push origin develop
