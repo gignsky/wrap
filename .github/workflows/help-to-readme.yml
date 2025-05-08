@@ -22,7 +22,7 @@ jobs:
         run: cargo build --release
 
       - name: Capture --help output
-        run: ./target/release/recursive-tarballs --help > help_output.txt
+        run: ./target/release/tarballer --help > help_output.txt
 
       - name: Update README.md
         run: |

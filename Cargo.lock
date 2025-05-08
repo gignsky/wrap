@@ -192,14 +192,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "recursive-tarballs"
-version = "0.1.2"
-dependencies = [
- "clap",
- "tar",
-]
-
-[[package]]
 name = "redox_syscall"
 version = "0.5.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -247,6 +239,14 @@ dependencies = [
  "filetime",
  "libc",
  "xattr",
+]
+
+[[package]]
+name = "tarballer"
+version = "0.1.2"
+dependencies = [
+ "clap",
+ "tar",
 ]
 
 [[package]]

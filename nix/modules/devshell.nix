@@ -2,7 +2,7 @@
 {
   perSystem = { config, self', pkgs, lib, ... }: {
     devShells.default = pkgs.mkShell {
-      name = "recursive-tarballs-shell";
+      name = "tarballer-shell";
       inputsFrom = [
         self'.devShells.rust
         config.treefmt.build.devShell
