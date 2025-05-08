@@ -17,9 +17,11 @@ jobs:
               run: |
                 git fetch --tags
 
-            - name: Get latest tag
+            - name: Get latest tag from main branch
               id: get_latest_tag
-              run: echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+              run: |
+                LATEST_TAG=$(git fetch origin main --tags && git tag --sort=-creatordate | head -n 1)
+                echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
             - name: Get Cargo.toml version
               id: get_cargo_version
