@@ -1,0 +1,28 @@
+name: Fast-Forward Develop
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    fast-forward-develop:
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v3
+
+          - name: Set up Git
+            run: |
+              git config user.name "github-actions[bot]"
+              git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          - name: Fetch all branches
+            run: git fetch --all
+
+          - name: Fast-forward develop branch
+            run: |
+              git checkout develop
+              git merge --ff-only origin/main
+              git push origin develop
