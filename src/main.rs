@@ -40,26 +40,21 @@ fn main() {
     );
 }
 
-fn target_dir_finder(target_dir: Option<String>) -> &Path {
+fn target_dir_finder(target_dir: Option<String>) -> &'static Path {
     match target_dir {
         Some(dir) => {
             let path = Path::new(&dir);
             if path.exists() {
-                path
+                Box::leak(Box::new(path.to_path_buf())).as_path()
             } else {
                 panic!("Target directory does not exist: {:?}", dir);
             }
         }
         None => {
             // If no target directory is provided, use the current directory
-            find_current_dir()
+            Path::new(".")
         }
     }
-}
-
-fn find_current_dir() -> &'static Path {
-    let current_dir = Path::new(".");
-    current_dir
 }
 
 /// Finds all folders in the current directory and returns a hashmap of tarball names and paths
