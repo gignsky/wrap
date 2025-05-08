@@ -38,6 +38,7 @@ tarballer
 tarballing
 treefmt
 upjust
+vimjoyer
 wincon
 wslu
 zigbuild
