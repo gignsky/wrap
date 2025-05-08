@@ -59,7 +59,10 @@ In your `flake.nix` file:
 ```
 A command line utility written entirely in Rust that creates tarballs from folders in the current working directory and optionally removes the folders that created those tarballs
 
-Usage: recursive-tarballs [OPTIONS]
+Usage: recursive-tarballs [OPTIONS] [TARGET_DIR]
+
+Arguments:
+  [TARGET_DIR]  Target folder - Tarball folders in this directory - Default is current directory
 
 Options:
   -v             Print Verbose output
