@@ -12,8 +12,12 @@ struct Args {
     verbose: bool,
 
     /// Remove folders after tarballing
-    #[arg(short = 'r', long = "remove")]
+    #[arg(short = 'R', long = "remove")]
     remove: bool,
+
+    /// Traverse folders and tarball all folders recursively
+    #[arg(short = 'R', long = "recursive")]
+    recursive: bool,
 
     /// Dry run - List folders to be tarballed but do not create tarballs
     #[arg(short = 'd', long = "dry-run")]
@@ -27,17 +31,17 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    let target_dir = target_dir_finder(args.target_dir);
+    let target_dir = args.target_dir.clone();
 
+    let target_dir = target_dir_finder(target_dir);
+
+    tarball_directory(args, target_dir);
+}
+
+fn tarball_directory(args: Args, target_dir: &'static Path) {
     let tarball_names_and_paths = pathfinder(args.verbose, target_dir);
 
-    tarballer(
-        args.dry_run,
-        args.verbose,
-        args.remove,
-        tarball_names_and_paths,
-        target_dir,
-    );
+    tarballer(args, tarball_names_and_paths, target_dir);
 }
 
 fn target_dir_finder(target_dir: Option<String>) -> &'static Path {
@@ -60,18 +64,18 @@ fn target_dir_finder(target_dir: Option<String>) -> &'static Path {
 /// Finds all folders in the current directory and returns a hashmap of tarball names and paths
 fn pathfinder(
     verbose: bool,
-    current_dir: &Path,
+    target_dir: &Path,
 ) -> std::collections::HashMap<String, std::path::PathBuf> {
     // find current directory
     if verbose {
-        println!("Working directory: {:?}", current_dir);
+        println!("Working directory: {:?}", target_dir);
     }
 
     // start vec of folder paths
     let mut folder_paths = Vec::new();
 
     // filter paths to only include folders
-    let paths = std::fs::read_dir(current_dir).unwrap();
+    let paths = std::fs::read_dir(target_dir).unwrap();
     for path in paths {
         let path = path.unwrap().path();
         if verbose {
@@ -111,12 +115,19 @@ fn pathfinder(
 
 /// Creates tarballs from the folder paths in the hashmap
 fn tarballer(
-    dry_run: bool,
-    verbose: bool,
-    remove: bool,
+    args: Args,
     names_and_paths: std::collections::HashMap<String, std::path::PathBuf>,
-    current_dir: &Path,
+    target_dir: &Path,
 ) {
+    let dry_run = args.dry_run;
+    let remove = args.remove;
+    let verbose = args.verbose;
+    let recursive = args.recursive;
+
+    if verbose {
+        println!("Running Tarballer of Directory: {:?}", target_dir);
+    }
+
     // iterate over hashmap and create tarballs
     for (tarball_name, folder_path) in names_and_paths {
         let tarball_name = tarball_name.to_string();
@@ -127,7 +138,7 @@ fn tarballer(
         if verbose {
             println!("Folder path: {:?}", folder_path);
         }
-        let tarball_path = format!("{}/{}", current_dir.to_str().unwrap(), tarball_name);
+        let tarball_path = format!("{}/{}", target_dir.to_str().unwrap(), tarball_name);
         if verbose {
             println!("Tarball path: {:?}", tarball_path);
         }
@@ -149,25 +160,35 @@ fn tarballer(
             }
 
             false => {
-                if verbose {
-                    println!("Tarballing folder: {:?}", folder_path);
-                }
-                let file = File::create(tarball_path).unwrap();
-                let mut archive = Builder::new(file);
-                archive.append_dir_all(folder_path, folder_path).unwrap();
-                if verbose {
-                    println!("Tarball created: {:?}", tarball_name);
-                }
-                match remove {
-                    true => {
-                        if verbose {
-                            println!("Removing folder: {:?}", folder_path);
-                        }
-                        remove_dir(folder_path, verbose);
+                if recursive {
+                    if recursive {
+                        println!("Attempting to tarball subfolders of: {:?}", folder_path);
                     }
-                    false => {
-                        if verbose {
-                            println!("Not removing folder: {:?}", folder_path);
+
+                    let sub_path = Path::new(folder_path);
+
+                    tarball_directory(args, sub_path);
+
+                    if verbose {
+                        println!("Tarballing folder: {:?}", folder_path);
+                    }
+                    let file = File::create(tarball_path).unwrap();
+                    let mut archive = Builder::new(file);
+                    archive.append_dir_all(folder_path, folder_path).unwrap();
+                    if verbose {
+                        println!("Tarball created: {:?}", tarball_name);
+                    }
+                    match remove {
+                        true => {
+                            if verbose {
+                                println!("Removing folder: {:?}", folder_path);
+                            }
+                            remove_dir(folder_path, verbose);
+                        }
+                        false => {
+                            if verbose {
+                                println!("Not removing folder: {:?}", folder_path);
+                            }
                         }
                     }
                 }
