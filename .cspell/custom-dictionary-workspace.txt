@@ -34,7 +34,6 @@ stdenv
 strsim
 Swatinem
 tarballed
-tarballer
 tarballing
 treefmt
 upjust

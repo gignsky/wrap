@@ -2,7 +2,7 @@
 authors = ["Maxwell Rupp <gignsky@gignsky.com>"]
 edition = "2021"
 # If you change the name here, you must also do it in flake.nix (and run `cargo generate-lockfile` afterwards)
-name = "tarballer"
+name = "wrap"
 description = "A command line utility written entirely in Rust that creates tarballs from folders in the current working directory and optionally removes the folders that created those tarballs"
 version = "0.1.3"
 
