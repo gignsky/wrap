@@ -34,10 +34,10 @@ stdenv
 strsim
 Swatinem
 tarballed
-tarballer
 tarballing
 treefmt
 upjust
+vimjoyer
 wincon
 wslu
 zigbuild
