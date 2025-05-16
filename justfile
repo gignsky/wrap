@@ -65,6 +65,8 @@ update-flake-no-commit:
 
 # Build the project using Nix with the provided arguments
 build *ARGS:
+	cargo build
+	cargo build --release
 	nix build {{ ARGS }}
 	quick-results
 
