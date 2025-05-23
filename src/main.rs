@@ -1,7 +1,11 @@
+mod logger;
+
 use clap::Parser;
 use std::fs::File;
 use std::path::Path;
 use tar::Builder;
+
+use logger::{LogLevel, Logger};
 
 #[derive(Parser, Debug)]
 #[clap(author = "Maxwell Rupp", version, about)]
@@ -11,8 +15,12 @@ struct Args {
     #[arg(short = 'v')]
     verbose: bool,
 
+    /// Runs warp recursively
+    #[arg(short = 'r', long = "recursive")]
+    recursive: bool,
+
     /// Remove folders after tarballing
-    #[arg(short = 'r', long = "remove")]
+    #[arg(short = 'R', long = "remove")]
     remove: bool,
 
     /// Dry run - List folders to be tarballed but do not create tarballs
@@ -24,23 +32,7 @@ struct Args {
     target_dir: Option<String>,
 }
 
-fn main() {
-    let args = Args::parse();
-
-    let target_dir = target_dir_finder(args.target_dir);
-
-    let tarball_names_and_paths = pathfinder(args.verbose, target_dir);
-
-    tarballer(
-        args.dry_run,
-        args.verbose,
-        args.remove,
-        tarball_names_and_paths,
-        target_dir,
-    );
-}
-
-fn target_dir_finder(target_dir: Option<String>) -> &'static Path {
+fn find_target_dir(logger: &Logger, target_dir: &Option<String>) -> &'static Path {
     match target_dir {
         Some(dir) => {
             let path = Path::new(&dir);
@@ -57,6 +49,55 @@ fn target_dir_finder(target_dir: Option<String>) -> &'static Path {
     }
 }
 
+fn tarball_directory(args: &Args, logger: &Logger, target_dir: &Path) {
+    logger.trace(&format!(
+        "Tarballing {}",
+        target_dir.to_str().unwrap_or("N/A")
+    ));
+
+    // TODO: Write a function that returns Vec<&Path>
+    let files: Vec<&Path> = vec![]; //= find_child_files(logger, target_dir);
+
+    // TODO: This should basically be the ``tarballer`` function in upstream/main
+    todo!()
+}
+
+fn tarball_directories(args: &Args, logger: &Logger, target_dir: &Path) {
+    // TODO: Write a function that returns Vec<&Path> of all directories
+    // contained within ``target_dir``
+    let child_dirs: Vec<&Path> = vec![]; //= find_child_directories(logger, target_dir);
+
+    for dir in child_dirs {
+        tarball_directories(args, logger, dir)
+    }
+
+    tarball_directory(args, logger, target_dir);
+}
+
+fn main() {
+    let args = Args::parse();
+
+    // TODO: Make it to where you can use all log levels
+    let log_level = if args.verbose {
+        LogLevel::Trace
+    } else {
+        LogLevel::Off
+    };
+
+    let logger: Logger = Logger::init(log_level);
+
+    let target_dir = find_target_dir(&logger, &args.target_dir);
+
+    if args.recursive {
+        tarball_directories(&args, &logger, target_dir);
+    } else {
+        tarball_directory(&args, &logger, target_dir);
+    }
+}
+
+/*
+* NOTE: This is legacy code only in for reference for @gignsky
+*
 /// Finds all folders in the current directory and returns a hashmap of tarball names and paths
 fn pathfinder(
     verbose: bool,
@@ -220,3 +261,6 @@ fn remove_dir(path: &str, verbose: bool) {
         }
     }
 }
+*
+*
+*/
