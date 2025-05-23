@@ -1,8 +1,8 @@
 mod logger;
 
 use clap::Parser;
-use std::fs::File;
 use std::path::Path;
+use std::{fs::File, path::PathBuf};
 use tar::Builder;
 
 use logger::{LogLevel, Logger};
@@ -32,19 +32,19 @@ struct Args {
     target_dir: Option<String>,
 }
 
-fn find_target_dir(logger: &Logger, target_dir: &Option<String>) -> &'static Path {
+fn find_target_dir(logger: &Logger, target_dir: &Option<String>) -> PathBuf {
     match target_dir {
         Some(dir) => {
-            let path = Path::new(&dir);
+            let path = PathBuf::from(dir);
             if path.exists() {
-                Box::leak(Box::new(path.to_path_buf())).as_path()
+                path
             } else {
                 panic!("Target directory does not exist: {:?}", dir);
             }
         }
         None => {
             // If no target directory is provided, use the current directory
-            Path::new(".")
+            PathBuf::from(".")
         }
     }
 }
@@ -87,6 +87,7 @@ fn main() {
     let logger: Logger = Logger::init(log_level);
 
     let target_dir = find_target_dir(&logger, &args.target_dir);
+    let target_dir = target_dir.as_path();
 
     if args.recursive {
         tarball_directories(&args, &logger, target_dir);
