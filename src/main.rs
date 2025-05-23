@@ -22,6 +22,11 @@ struct Args {
     /// Target folder - Tarball folders in this directory - Default is current directory
     #[arg()]
     target_dir: Option<String>,
+
+    /// Unpack the tarballs after creating them
+    /// Note: When used with `-r` or `--remove`, this will unpack the tarballs and delete the tarballs
+    #[arg(short = 'u', long = "unpack")]
+    unpack: bool,
 }
 
 fn main() {
@@ -29,15 +34,23 @@ fn main() {
 
     let target_dir = target_dir_finder(args.target_dir);
 
-    let tarball_names_and_paths = pathfinder(args.verbose, target_dir);
+    match args.unpack {
+        false => {
+            let tarball_names_and_paths = pathfinder(args.verbose, target_dir);
 
-    tarballer(
-        args.dry_run,
-        args.verbose,
-        args.remove,
-        tarball_names_and_paths,
-        target_dir,
-    );
+            tarballer(
+                args.dry_run,
+                args.verbose,
+                args.remove,
+                tarball_names_and_paths,
+                target_dir,
+            );
+        }
+        true => {
+            todo!();
+            println!("Unpacking tarballs...");
+        }
+    }
 }
 
 fn target_dir_finder(target_dir: Option<String>) -> &'static Path {
