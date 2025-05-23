@@ -33,10 +33,12 @@ struct Args {
 }
 
 fn find_target_dir(logger: &Logger, target_dir: &Option<String>) -> PathBuf {
+    logger.trace("Finding target directory...");
     match target_dir {
         Some(dir) => {
             let path = PathBuf::from(dir);
             if path.exists() {
+                logger.info(&format!("Path found: {}", path.to_str().unwrap_or("N/A")));
                 path
             } else {
                 panic!("Target directory does not exist: {:?}", dir);
@@ -44,6 +46,7 @@ fn find_target_dir(logger: &Logger, target_dir: &Option<String>) -> PathBuf {
         }
         None => {
             // If no target directory is provided, use the current directory
+            logger.info("No target directory passed, defaulting to current directory.");
             PathBuf::from(".")
         }
     }
@@ -51,7 +54,7 @@ fn find_target_dir(logger: &Logger, target_dir: &Option<String>) -> PathBuf {
 
 fn tarball_directory(args: &Args, logger: &Logger, target_dir: &Path) {
     logger.trace(&format!(
-        "Tarballing {}",
+        "Tarballing Dir: {}",
         target_dir.to_str().unwrap_or("N/A")
     ));
 
