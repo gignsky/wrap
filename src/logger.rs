@@ -1,9 +1,23 @@
+use std::fmt;
+
 #[derive(PartialEq, PartialOrd)]
 pub enum LogLevel {
     Off,
     Warn,
     Info,
     Trace,
+}
+
+impl fmt::Display for LogLevel {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let log_level = match *self {
+            Self::Warn => "WARNING",
+            Self::Info => "INFO",
+            Self::Trace => "TRACE",
+            _ => "",
+        };
+        write!(f, "{}", log_level)
+    }
 }
 
 pub struct Logger {
@@ -32,6 +46,6 @@ impl Logger {
             return;
         };
 
-        println!("{}", message);
+        println!("{}: {}", log_level, message);
     }
 }
