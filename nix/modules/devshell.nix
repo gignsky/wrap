@@ -18,6 +18,7 @@
         wslu
         cargo-generate
         python3
+        lazygit
 
         # dotfiles programs
         inputs.dotfiles.packages.${system}.quick-results
