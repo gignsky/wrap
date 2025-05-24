@@ -3,8 +3,10 @@ name: Update README with --help Output
 on:
     pull_request:
         branches:
-            - develop
-            - main
+            - release/*
+            - hotfix/*
+            - bugfix/*
+            
     workflow_dispatch:
 
 jobs:

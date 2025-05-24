@@ -3,7 +3,7 @@ name: Check Cargo Version
 on:
     pull_request:
         branches:
-            - main
+            - release/*
 
 jobs:
     check-cargo-version:
