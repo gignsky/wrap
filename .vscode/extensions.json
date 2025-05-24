@@ -31,6 +31,7 @@
         "usernamehw.errorlens",
         "pkief.material-icon-theme",
         "bbenoist.nix",
-        "duniul.git-stage"
+        "duniul.git-stage",
+        "gruntfuggly.todo-tree"
     ]
 }
