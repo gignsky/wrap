@@ -19,6 +19,7 @@
         cargo-generate
         python3
         lazygit
+        gitflow
 
         # dotfiles programs
         inputs.dotfiles.packages.${system}.quick-results
