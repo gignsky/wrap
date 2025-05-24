@@ -4,6 +4,9 @@ on:
     pull_request:
         branches:
             - release/*
+            - hotfix/*
+            - bugfix/*
+            
     workflow_dispatch:
 
 jobs:
