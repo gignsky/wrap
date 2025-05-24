@@ -2,10 +2,8 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - "Cargo.toml"
+    tags:
+      - 'v*' # This will trigger the workflow on any push to a tag starting with 'v'
 
 permissions:
   contents: write
@@ -63,29 +61,35 @@ jobs:
           path: dist
           merge-multiple: true
 
-      - name: Extract version
+      - name: Extract tag version
         id: extract_version
-        run: |
-          VERSION=$(grep '^version = ' Cargo.toml | sed -E 's/version = "(.*)"/\1/')
-          echo "::set-output name=version::$VERSION"
+        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/v}" # Extracts '1.0.0' from 'refs/tags/v1.0.0'
 
       - name: Generate changelog
         id: changelog
         run: |
-          VERSION=${{ steps.extract_version.outputs.version }}
-          PREV_TAG=$(git tag --sort=-creatordate | head -n 1)
+          # Use GITHUB_REF_NAME to get the current tag name
+          CURRENT_TAG=${{ github.ref_name }}
+          PREV_TAG=$(git tag --sort=-creatordate | grep -v "$CURRENT_TAG" | head -n 1) # Get the previous tag, excluding the current one
           if [ -z "$PREV_TAG" ]; then
-            echo "No previous tag found, using all history."
-            git log --oneline > changelog.txt
+            echo "No previous tag found, using all history up to current tag."
+            git log --oneline "$CURRENT_TAG" > changelog.txt
           else
-            git log --oneline $PREV_TAG..HEAD > changelog.txt
+            echo "Generating changelog from $PREV_TAG to $CURRENT_TAG"
+            git log --oneline "$PREV_TAG".."$CURRENT_TAG" > changelog.txt
           fi
+          # Ensure changelog.txt is not empty if no commits between tags
+          if [ ! -s changelog.txt ]; then
+            echo "No changes found between $PREV_TAG and $CURRENT_TAG."
+            echo "Initial release or no new commits since last tag." > changelog.txt
+          fi
+
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.extract_version.outputs.version }}
-          name: Release v${{ steps.extract_version.outputs.version }}
+          tag_name: ${{ github.ref_name }} # Use the full tag name from the event
+          name: Release ${{ github.ref_name }}
           files: dist/*
           body_path: changelog.txt
           draft: false
