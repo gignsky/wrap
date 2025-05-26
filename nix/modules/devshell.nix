@@ -27,7 +27,7 @@
         inputs.dotfiles.packages.${system}.cargo-update
       ];
       shellHook = ''
-        echo "welcome to the rust development environment for the wrap package" | ${pkgs.cowsay}/bin/cowsay
+        echo "welcome to the rust development environment for the wrap package" | ${pkgs.cowsay}/bin/cowsay | ${pkgs.lolcat}/bin/lolcat 2> /dev/null;
       '';
     };
   };
