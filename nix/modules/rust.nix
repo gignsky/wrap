@@ -6,14 +6,25 @@
     inputs.process-compose-flake.flakeModule
     inputs.cargo-doc-live.flakeModule
   ];
-  perSystem = { config, self', pkgs, lib, ... }: {
-    rust-project.crates."wrap".crane.args = {
-      buildInputs = lib.optionals pkgs.stdenv.isDarwin (
-        with pkgs.darwin.apple_sdk.frameworks; [
-          IOKit
-        ]
-      );
+  perSystem =
+    { config
+    , self'
+    , pkgs
+    , lib
+    , ...
+    }:
+    {
+      rust-project.crates."wrap".crane.args = {
+        buildInputs = lib.optionals pkgs.stdenv.isDarwin (
+          with pkgs.darwin.apple_sdk.frameworks;
+          [
+            IOKit
+          ]
+        );
+      };
+      packages.default = self'.packages.wrap;
+      packages.wrapper = pkgs.writeShellScriptBin "wrapper" ''
+        exec ${self'.packages.wrap}/bin/wrap
+      '';
     };
-    packages.default = self'.packages.wrap;
-  };
 }
