@@ -26,5 +26,8 @@
       packages.wrapper = pkgs.writeShellScriptBin "wrapper" ''
         exec ${self'.packages.wrap}/bin/wrap
       '';
+      packages.wrapd = pkgs.writeShellScriptBin "wrapd" ''
+        exec ${self'.packages.wrap}/bin/wrap
+      '';
     };
 }
