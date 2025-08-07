@@ -18,6 +18,10 @@ jobs:
           - x86_64-unknown-linux-gnu
           # - x86_64-apple-darwin
           - x86_64-pc-windows-gnu
+        binary_name:
+          - wrap
+          - wrapper
+          - wrapd
     steps:
       - uses: actions/checkout@v4
 
@@ -40,12 +44,12 @@ jobs:
           ext=""
           if [[ "${{ matrix.target }}" == *windows* ]]; then ext=".exe"; fi
           mkdir -p dist
-          cp target/${{ matrix.target }}/release/wrap$ext dist/wrap-"$CURRENT_TAG"-${{ matrix.target }}$ext
+          cp target/${{ matrix.target }}/release/wrap$ext dist/${{ matrix.binary_name }}-${{ matrix.target }}$ext
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: binaries-${{ matrix.target }}
+          name: binaries-${{ matrix.binary_name }}-${{ matrix.target }}
           path: dist/*
 
   release:
