@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   perSystem = { config, self', pkgs, lib, ... }: {
     devShells.default = pkgs.mkShell {
       name = "wrap-shell";
