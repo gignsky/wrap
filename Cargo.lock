@@ -327,8 +327,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[package]]
-name = "wrap"
-version = "0.1.4-patch-0.3"
+name = "wrapd"
+version = "0.1.4-patch-0.4"
 dependencies = [
  "clap",
  "tar",
