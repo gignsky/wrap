@@ -40,6 +40,7 @@ jobs:
 
       - name: Rename binary for upload
         run: |
+          CURRENT_TAG=${{ github.ref_name }}
           ext=""
           if [[ "${{ matrix.target }}" == *windows* ]]; then ext=".exe"; fi
           mkdir -p dist
