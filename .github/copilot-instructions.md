@@ -1,6 +1,6 @@
-# Wrap - Rust CLI Tarball Utility
+# Wrapd - Rust CLI Tarball Utility
 
-Wrap is a command-line utility written entirely in Rust that creates tarballs from folders in the current working directory and optionally removes the folders that created those tarballs.
+Wrapd is a command-line utility written entirely in Rust that creates tarballs from folders in the current working directory and optionally removes the folders that created those tarballs.
 
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
