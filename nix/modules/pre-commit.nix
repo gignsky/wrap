@@ -1,12 +1,9 @@
-{ inputs, ... }:
-{
-  imports = [
-    (inputs.git-hooks + /flake-module.nix)
-  ];
+{ inputs, ... }: {
+  imports = [ (inputs.git-hooks + /flake-module.nix) ];
   perSystem = { config, self', pkgs, lib, ... }: {
     pre-commit.settings = {
       hooks = {
-        nixpkgs-fmt.enable = true;
+        nixfmt-classic.enable = true;
         rustfmt.enable = true;
       };
     };
