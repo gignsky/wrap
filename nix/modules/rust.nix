@@ -22,12 +22,14 @@
           ]
         );
       };
-      packages.default = self'.packages.wrap;
-      packages.wrapper = pkgs.writeShellScriptBin "wrapper" ''
-        exec ${self'.packages.wrap}/bin/wrap
-      '';
-      packages.wrapd = pkgs.writeShellScriptBin "wrapd" ''
-        exec ${self'.packages.wrap}/bin/wrap
-      '';
+      packages = {
+        default = self'.packages.wrap;
+        wrapper = pkgs.writeShellScriptBin "wrapper" ''
+          exec ${self'.packages.wrap}/bin/wrap "$@"
+        '';
+        wrapd = pkgs.writeShellScriptBin "wrapd" ''
+          exec ${self'.packages.wrap}/bin/wrap "$@"
+        '';
+      };
     };
 }
